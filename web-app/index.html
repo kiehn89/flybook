@@ -37,7 +37,7 @@
 <script src="js/util.js"></script>
 <script>
 
-    $(document).ready(
+    $(document).ready(function () {
         $('#signin').on('click', function () {
             var email = $('#inputEmail').val();
             var pass = $('#inputPassword').val();
@@ -45,22 +45,24 @@
             console.log("[LOG - index.html:43] " + pass);
 
             $.ajax({
-                url: URL + '&action=login' +
-                '&email=' + email +
-                '&pass=' + pass,
-                method: 'GET',
+                url: URL + '?action=login', // kun action i URL
+                method: 'POST',
+                data: {
+                    email: email,
+                    pass: pass
+                },
                 dataType: 'json',
                 success: function (res) {
-                    if(res[0].status == 200){
+                    if (res[0].status == 200) {
                         localStorage.setItem('user', JSON.stringify(res[1]));
                         window.location.replace("book.html");
                     } else {
                         alert('The login info you entered are not correct!');
                     }
                 }
-            })
-        })
-    )
+            });
+        });
+    });
 
 </script>
 
